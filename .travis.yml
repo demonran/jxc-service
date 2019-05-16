@@ -1,7 +1,14 @@
 language: java
 jdk: oraclejdk8
-
-install: ./gradlew clean build -x test
-
+install: "./gradlew clean build -x test"
 script:
-  - echo 'hello'
+- echo 'hello'
+before_install:
+- openssl aes-256-cbc -K $encrypted_512b2015aa14_key -iv $encrypted_512b2015aa14_iv
+  -in id_rsa.enc -out ~/.ssh/id_rsa -d
+- chmod 600 ~/.ssh/id_rsa
+addons:
+  ssh_known_hosts: 47.106.127.210
+
+after_success:
+  - scp build/lib/*.jar root@47.106.127.210:/opt
