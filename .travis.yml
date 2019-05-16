@@ -11,4 +11,5 @@ addons:
   ssh_known_hosts: 47.106.127.210
 
 after_success:
-  - scp build/lib/*.jar root@47.106.127.210:/opt
+  - pwd
+  - scp build/libs/*.jar root@47.106.127.210:/opt
