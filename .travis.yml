@@ -12,4 +12,6 @@ addons:
 
 after_success:
   - pwd
-  - scp build/libs/*.jar root@47.106.127.210:/opt
+  - scp build/libs/jxc-service-0.0.1-SNAPSHOT.jar root@47.106.127.210:/opt
+  - ps -ef | grep jxc-service-0.0.1-SNAPSHOT.jar | grep -v grep | awk  '{ print $2 }' | xargs
+  - java -jar grep jxc-service-0.0.1-SNAPSHOT.jar &
