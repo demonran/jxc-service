@@ -1,0 +1,27 @@
+## MAC OS
+.DS_Store
+
+## Intellij
+*.iml
+.idea
+pom.xml
+
+
+pids
+logs
+
+version.txt
+
+.project
+.classpath
+.settings/
+.metadata
+.gradle/
+out/
+dist/
+bower_components/
+build/
+
+*.ipr
+*.iws
+
