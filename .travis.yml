@@ -11,8 +11,7 @@ addons:
   ssh_known_hosts: 47.106.127.210
 
 after_success:
-  - pwd
   - scp build/libs/jxc-service-0.0.1-SNAPSHOT.jar root@47.106.127.210:/opt
-  - ssh root@47.106.127.210 "pid=$(ps -ef | grep jxc-service-0.0.1-SNAPSHOT.jar | grep -v grep | awk  '{ print $2 }')"
-  - ssh root@47.106.127.210 "java -jar xargs kill -9 $(pid)"
-  - ssh root@47.106.127.210 "java -jar  /opt/jxc-service-0.0.1-SNAPSHOT.jar &"
+  - pid=$(ssh root@47.106.127.210 "ps -ef | grep jxc-service-0.0.1-SNAPSHOT.jar |grep -v grep|  awk  '{ print $2}'"| awk '{print $2}')
+  - ssh root@47.106.127.210 "kill -9 $(pid)"
+  - ssh root@47.106.127.210 "java -jar /opt/jxc-service-0.0.1-SNAPSHOT.jar &"
