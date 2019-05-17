@@ -1,5 +1,7 @@
 #!/bin/bash
+
 Jar_Path=$1
+
 usage()
 {
     echo "Usage: $0 <Jar_Path> {start|stop|restart}  "
@@ -8,13 +10,24 @@ usage()
 
 start()
 {
-    java -jar $1 &
+    java -jar $Jar_Path >$Jar_Path.log &
 }
+
 stop()
 {
-    ps -ef | grep $(Jar_Path) | grep -v grep | awk '{print $2}'|xargs kill -9
+    echo "stop $Jar_Path ........"
+    ps -ef | grep java | grep -w $Jar_Path
+    num=`ps -ef | grep java | grep -w $Jar_Path | wc -l`
+    echo $num
+    if [ $num -ne 0 ];then
+        pid=`ps -ef | grep java | grep -w $Jar_Path | awk '{print $2}'`
+        kill -9 $pid
+        echo "$Jar_Path stoped"
+    else
+        echo "$Jar_Path not run"
+    fi
 }
-case "$1" in
+case "$2" in
     start)
         start
         ;;
