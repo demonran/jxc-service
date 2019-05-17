@@ -1,13 +1,16 @@
 package com.demonran.portal.jxc.controller;
 
+import com.alibaba.excel.metadata.Sheet;
 import com.demonran.portal.jxc.model.Bom;
 import com.demonran.portal.jxc.repository.BomRepository;
+import com.demonran.portal.jxc.utils.ExcelUitls;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("bom")
@@ -19,6 +22,15 @@ public class JxcController {
     @GetMapping
     public List<Bom> list(){
         return repository.findAll();
+    }
+
+    @PostMapping("/upload")
+    public List<Bom> upload(@RequestParam("file") MultipartFile file) throws IOException {
+        List<Bom> boms = ExcelUitls.read(file.getInputStream(), new Sheet(1, 1, Bom.class))
+                .stream().map(lt -> (Bom) lt).collect(Collectors.toList());
+
+        repository.saveAll(boms);
+        return boms;
     }
 
 
