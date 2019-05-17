@@ -13,5 +13,5 @@ addons:
 after_success:
   - pwd
   - scp build/libs/jxc-service-0.0.1-SNAPSHOT.jar root@47.106.127.210:/opt
-  - ssh root@47.106.127.210 "ps -ef | grep jxc-service-0.0.1-SNAPSHOT.jar | grep -v grep | awk  '{ print $2 }' | xargs kill -9"
-  - ssh root@47.106.127.210 "java -jar  /opt/jxc-service-0.0.1-SNAPSHOT.jar &"
+  - ssh root@47.106.127.210 ps -ef | grep jxc-service-0.0.1-SNAPSHOT.jar | grep -v grep | awk  '{ print $2 }' | xargs kill -9
+  - ssh root@47.106.127.210 java -jar  /opt/jxc-service-0.0.1-SNAPSHOT.jar &
