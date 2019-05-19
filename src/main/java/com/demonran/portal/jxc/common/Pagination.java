@@ -17,6 +17,7 @@ import java.util.List;
 @Builder
 public class Pagination<T> {
     private Integer totalPages;
+    private Integer totalSize;
     private Integer currentPage;
     private Integer pageSize;
     /**
@@ -27,6 +28,7 @@ public class Pagination<T> {
     public static Pagination of(Page page) {
         return Pagination.builder()
                 .totalPages(page.getTotalPages())
+                .totalSize((int)page.getTotalElements())
                 .currentPage(page.getNumber())
                 .pageSize(page.getSize())
                 .content(page.getContent())

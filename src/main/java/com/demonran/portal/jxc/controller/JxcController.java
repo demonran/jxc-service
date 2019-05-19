@@ -24,7 +24,7 @@ public class JxcController {
 
     @GetMapping
     public Pagination<Bom> list(int page , int size){
-        return Pagination.of(repository.findAll(PageRequest.of(page, size)));
+        return Pagination.of(repository.findAll(PageRequest.of(page-1, size)));
     }
 
 
