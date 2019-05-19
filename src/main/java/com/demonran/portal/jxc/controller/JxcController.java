@@ -1,10 +1,13 @@
 package com.demonran.portal.jxc.controller;
 
 import com.alibaba.excel.metadata.Sheet;
+import com.demonran.portal.jxc.common.Pagination;
 import com.demonran.portal.jxc.model.Bom;
 import com.demonran.portal.jxc.repository.BomRepository;
 import com.demonran.portal.jxc.utils.ExcelUitls;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,9 +23,10 @@ public class JxcController {
     private BomRepository repository;
 
     @GetMapping
-    public List<Bom> list(){
-        return repository.findAll();
+    public Pagination<Bom> list(int page , int size){
+        return Pagination.of(repository.findAll(PageRequest.of(page, size)));
     }
+
 
     @PostMapping("/upload")
     public List<Bom> upload(@RequestParam("file") MultipartFile file) throws IOException {
