@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SFbinResult<T> {
+public class Response<T> {
 
     /**
      * 响应业务状态
@@ -31,20 +31,20 @@ public class SFbinResult<T> {
         return new SFbinResultBuilder();
     }
 
-    public static SFbinResult ok() {
-        return SFbinResultBuilder.build(ResponseCode.SUCCESS);
+    public static Response ok() {
+        return SFbinResultBuilder.build(ErrorCode.SUCCESS);
     }
 
-    public static <T> SFbinResult<T> ok(T data) {
-        return SFbinResultBuilder.build(ResponseCode.SUCCESS, data);
+    public static <T> Response<T> ok(T data) {
+        return SFbinResultBuilder.build(ErrorCode.SUCCESS, data);
     }
 
-    public static SFbinResult fail(Throwable e) {
-        return SFbinResultBuilder.build(ResponseCode.REFUSED, e.getMessage());
+    public static Response fail(Throwable e) {
+        return SFbinResultBuilder.build(ErrorCode.REFUSED, e.getMessage());
     }
 
-    public static SFbinResult fail(String message) {
-        return SFbinResultBuilder.build(ResponseCode.REFUSED, message);
+    public static Response fail(String message) {
+        return SFbinResultBuilder.build(ErrorCode.REFUSED, message);
     }
 
     public static class SFbinResultBuilder<T> {
@@ -73,21 +73,21 @@ public class SFbinResult<T> {
             return this;
         }
 
-        public SFbinResult build() {
-            return new SFbinResult(status, msg, data);
+        public Response build() {
+            return new Response(status, msg, data);
         }
 
 
-        public static <T> SFbinResult<T> build(ResponseCode code, String msg, T data) {
-            return new SFbinResult(code.getCode(), msg, data);
+        public static <T> Response<T> build(ErrorCode code, String msg, T data) {
+            return new Response(code.getCode(), msg, data);
         }
 
-        public static <T> SFbinResult<T> build(ResponseCode responseCode) {
-            return build(responseCode, null, null);
+        public static <T> Response<T> build(ErrorCode errorCode) {
+            return build(errorCode, null, null);
         }
 
-        public static <T> SFbinResult<T> build(ResponseCode responseCode, T data) {
-            return build(responseCode, responseCode.getMsg(), data);
+        public static <T> Response<T> build(ErrorCode errorCode, T data) {
+            return build(errorCode, errorCode.getMsg(), data);
         }
     }
 }
