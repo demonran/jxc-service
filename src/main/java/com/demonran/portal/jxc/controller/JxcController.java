@@ -27,6 +27,16 @@ public class JxcController {
         return Pagination.of(repository.findAll(PageRequest.of(page-1, size)));
     }
 
+    @PostMapping
+    public Bom save(@RequestBody Bom bom){
+        return repository.save(bom);
+    }
+
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable Integer id){
+         repository.deleteById(id);
+    }
+
 
     @PostMapping("/upload")
     public List<Bom> upload(@RequestParam("file") MultipartFile file) throws IOException {
